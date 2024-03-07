@@ -1,3 +1,24 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "5.39.1"
+    }
+  }
+
+  backend "remote" {
+    organization = "rocky-mountain-chile-man"
+
+    workspaces {
+      name = "kubernetes-ops-dev-vpc"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-west-2"
+}
+
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
