@@ -1,3 +1,23 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "5.38.0"
+    }
+  }
+  cloud {
+    organization = "rocky-mountain-chile-man"
+
+    workspaces {
+      name = "kubernetes-ops-dev-eks"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-west-2"
+}
+
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.0"
