@@ -18,11 +18,21 @@ provider "aws" {
   region = "us-west-2"
 }
 
+data "terraform_remote_state" "vpc" {
+  backend = "remote"
+  config = {
+    organization = "rocky-mountain-chile-man"
+    workspaces = {
+      name = "kubernetes-ops-dev-vpc"
+    }
+  }
+}
+
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.0"
 
-  cluster_name    = "my-cluster"
+  cluster_name    = "dev"
   cluster_version = "1.29"
 
   cluster_endpoint_public_access  = true
@@ -39,7 +49,7 @@ module "eks" {
     }
   }
 
-  vpc_id                   = "vpc-1234556abcdef"
+  vpc_id                   = data.terraform_remote_state.vpc.outputs.vpc_id
   subnet_ids               = ["subnet-abcde012", "subnet-bcde012a", "subnet-fghi345a"]
   control_plane_subnet_ids = ["subnet-xyzde987", "subnet-slkjf456", "subnet-qeiru789"]
 
@@ -67,17 +77,7 @@ module "eks" {
     # One access entry with a policy associated
     example = {
       kubernetes_groups = []
-      principal_arn     = "arn:aws:iam::123456789012:role/something"
-
-      policy_associations = {
-        example = {
-          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSViewPolicy"
-          access_scope = {
-            namespaces = ["default"]
-            type       = "namespace"
-          }
-        }
-      }
+      principal_arn     = "arn:aws:iam::211125552941:user/kube-admin"
     }
   }
 
