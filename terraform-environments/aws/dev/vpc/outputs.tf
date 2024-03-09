@@ -4,5 +4,5 @@ output "vpc_id" {
 }
 output "private_subnets" {
   description = "A list of private subnets"
-  value = module.vpc.private_subnets
+  value       = module.vpc.private_subnets
 }

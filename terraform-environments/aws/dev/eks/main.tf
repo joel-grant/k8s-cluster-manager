@@ -49,8 +49,8 @@ module "eks" {
     }
   }
 
-  vpc_id                   = data.terraform_remote_state.vpc.outputs.vpc_id
-  subnet_ids               = data.terraform_remove_state.vpc.outputs.private_subnets
+  vpc_id     = data.terraform_remote_state.vpc.outputs.vpc_id
+  subnet_ids = data.terraform_remove_state.vpc.outputs.private_subnets
   # Not sure what to do with this right now
   # control_plane_subnet_ids = ["subnet-xyzde987", "subnet-slkjf456", "subnet-qeiru789"]
 
