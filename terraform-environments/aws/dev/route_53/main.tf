@@ -12,7 +12,7 @@ terraform {
   }
 }
 
-module "zones" {
+module "aws_route53_zone" "private" {
   source  = "terraform-aws-modules/route53/aws//modules/zones"
   version = "~> 2.0"
 
