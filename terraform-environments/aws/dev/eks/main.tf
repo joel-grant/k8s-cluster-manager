@@ -50,7 +50,7 @@ module "eks" {
   }
 
   vpc_id     = data.terraform_remote_state.vpc.outputs.vpc_id
-  subnet_ids = merge(data.terraform_remote_state.vpc.outputs.private_subnets, data.terraform_remote_state.vpc.outputs.public_subnets)
+  subnet_ids = merge({ for elem in concat(data.terraform_remote_state.vpc.outputs.private_subnets, data.terraform_remote_state.vpc.outputs.public_subnets) : elem.key => elem })
   # Not sure what to do with this right now
   # control_plane_subnet_ids = ["subnet-xyzde987", "subnet-slkjf456", "subnet-qeiru789"]
 
