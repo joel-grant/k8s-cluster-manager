@@ -50,8 +50,9 @@ module "eks" {
   }
 
   vpc_id                   = data.terraform_remote_state.vpc.outputs.vpc_id
-  subnet_ids               = ["subnet-abcde012", "subnet-bcde012a", "subnet-fghi345a"]
-  control_plane_subnet_ids = ["subnet-xyzde987", "subnet-slkjf456", "subnet-qeiru789"]
+  subnet_ids               = data.terraform_remove_state.vpc.outputs.private_subnets
+  # Not sure what to do with this right now
+  # control_plane_subnet_ids = ["subnet-xyzde987", "subnet-slkjf456", "subnet-qeiru789"]
 
   # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {
