@@ -23,7 +23,7 @@ module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
 
-  name = "rmcm-vpc"
+  name = "dev-vpc"
   cidr = "10.0.0.0/16"
 
   azs             = ["us-west-2a", "us-west-2c", "us-west-2d"]
