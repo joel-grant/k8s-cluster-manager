@@ -23,12 +23,12 @@ data "terraform_remote_state" "vpc" {
 }
 
 resource "aws_route53_zone" "private" {
-  name  = "k8s.dev.plantcoach.com"
-  
+  name = "k8s.dev.plantcoach.com"
+
   vpc {
-    vpc_id     = data.terraform_remote_state.vpc.outputs.vpc_id
+    vpc_id = data.terraform_remote_state.vpc.outputs.vpc_id
   }
-  
+
   tags = {
     ManagedBy = "Terraform"
   }
