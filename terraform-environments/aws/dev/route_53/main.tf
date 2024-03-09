@@ -12,19 +12,23 @@ terraform {
   }
 }
 
-resource "aws_route53_zone" "private" {
-  source  = "terraform-aws-modules/route53/aws//modules/zones"
-  version = "~> 2.0"
-
-  zones = {
-    "k8s.dev.plantcoach.com" = {
-      comment = "k8s.dev.plantcoach.com"
-      tags = {
-        env = "dev"
-      }
+data "terraform_remote_state" "vpc" {
+  backend = "remote"
+  config = {
+    organization = "rocky-mountain-chile-man"
+    workspaces = {
+      name = "kubernetes-ops-dev-vpc"
     }
   }
+}
 
+resource "aws_route53_zone" "private" {
+  name  = "k8s.dev.plantcoach.com"
+  
+  vpc {
+    vpc_id     = data.terraform_remote_state.vpc.outputs.vpc_id
+  }
+  
   tags = {
     ManagedBy = "Terraform"
   }
