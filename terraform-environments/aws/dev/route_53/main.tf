@@ -9,7 +9,7 @@ terraform {
       version = ">= 5.38.0"
     }
   }
-  
+
   cloud {
     organization = "rocky-mountain-chile-man"
 
