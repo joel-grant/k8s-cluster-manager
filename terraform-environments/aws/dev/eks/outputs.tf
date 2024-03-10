@@ -6,6 +6,10 @@ output "oidc_provider_arn" {
   description = "The ARN for the OIDC provider"
   value       = module.eks.oidc_provider_arn
 }
+output "oidc_provider" {
+  description = "The OIDC provider"
+  value       = module.eks.oidc_provider
+}
 output "cluster_endpoint" {
   description = "Endpoint of the EKS cluster"
   value       = module.eks.cluster_endpoint
