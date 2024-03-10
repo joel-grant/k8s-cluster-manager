@@ -45,13 +45,15 @@ provider "helm" {
   }
 }
 
-module "cluster_autoscaler" {
-  source = "git::https://github.com/DNXLabs/terraform-aws-eks-cluster-autoscaler.git"
+module "eks_k_8_s_cluster_autoscaler" {
+  source = "git::git@github.com:gruntwork-io/terraform-aws-eks.git//modules/eks-k8s-cluster-autoscaler?ref=v0.65.6"
 
-  enabled = true
+  aws_region = "us-west-2"
 
-  cluster_name                     = "dev"
-  cluster_identity_oidc_issuer     = data.terraform_remote_state.eks.outputs.cluster_oidc_issuer_url
-  cluster_identity_oidc_issuer_arn = data.terraform_remote_state.eks.outputs.oidc_provider_arn
-  aws_region                       = "us-west-2"
+  eks_cluster_name = "dev"
+
+  iam_role_for_service_accounts_config = <object(
+    openid_connect_provider_arn = data.terraform_remote_state.eks.outputs.oidc_provider_arn
+    openid_connect_provider_url = data.terraform_remote_state.eks.outputs.cluster_oidc_issuer_url
+  )>
 }
