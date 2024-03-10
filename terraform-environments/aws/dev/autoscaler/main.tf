@@ -28,7 +28,7 @@ data "terraform_remote_state" "eks" {
   config = {
     organization = "rocky-mountain-chile-man"
     workspaces = {
-      name = "kubernetes-ops-dev-autoscaler"
+      name = "kubernetes-ops-dev-eks"
     }
   }
 }
