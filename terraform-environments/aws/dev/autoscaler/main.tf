@@ -9,11 +9,11 @@ terraform {
       version = "2.6.0"
     }
     kubernetes {
-      source = "hashicorp/kubernetes"
+      source  = "hashicorp/kubernetes"
       version = ">= 2.16.0"
     }
     utils {
-      source = "cloudposse/utils"
+      source  = "cloudposse/utils"
       version = ">= 0.17.0"
     }
   }
@@ -57,7 +57,7 @@ module "eks-cluster-autoscaler" {
   source  = "lablabs/eks-cluster-autoscaler/aws"
   version = "2.2.0"
 
-  cluster_identity_oidc_issuer = data.terraform_remote_state.eks.outputs.cluster_oidc_issuer
+  cluster_identity_oidc_issuer     = data.terraform_remote_state.eks.outputs.cluster_oidc_issuer
   cluster_identity_oidc_issuer_arn = data.terraform_remote_state.eks.outputs.oidc_provider_arn
-  cluster_name = "dev"
+  cluster_name                     = "dev"
 }
