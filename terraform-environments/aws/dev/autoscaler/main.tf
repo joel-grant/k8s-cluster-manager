@@ -2,11 +2,19 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "< 4.0"
+      version = ">= 4.19.0"
     }
     helm = {
       source  = "hashicorp/helm"
-      version = "2.12.1"
+      version = "2.6.0"
+    }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.16.0"
+    }
+    utils = {
+      source  = "cloudposse/utils"
+      version = ">= 0.17.0"
     }
   }
 
@@ -38,20 +46,18 @@ provider "helm" {
     host                   = data.terraform_remote_state.eks.outputs.cluster_endpoint
     cluster_ca_certificate = base64decode(data.terraform_remote_state.eks.outputs.cluster_certificate_authority_data)
     exec {
-      api_version = "client.authentication.k8s.io/v1"
+      api_version = "client.authentication.k8s.io/v1beta1"
       args        = ["eks", "get-token", "--cluster-name", "dev"]
       command     = "aws"
     }
   }
 }
 
-module "cluster_autoscaler" {
-  source = "git::https://github.com/DNXLabs/terraform-aws-eks-cluster-autoscaler.git"
+module "eks-cluster-autoscaler" {
+  source  = "lablabs/eks-cluster-autoscaler/aws"
+  version = "2.2.0"
 
-  enabled = true
-
-  cluster_name                     = "dev"
-  cluster_identity_oidc_issuer     = data.terraform_remote_state.eks.outputs.cluster_oidc_issuer_url
+  cluster_identity_oidc_issuer     = data.terraform_remote_state.eks.outputs.oidc_provider
   cluster_identity_oidc_issuer_arn = data.terraform_remote_state.eks.outputs.oidc_provider_arn
-  aws_region                       = "us-west-2"
+  cluster_name                     = "dev"
 }
