@@ -8,11 +8,11 @@ terraform {
       source  = "hashicorp/helm"
       version = "2.6.0"
     }
-    kubernetes {
+    kubernetes = {
       source  = "hashicorp/kubernetes"
       version = ">= 2.16.0"
     }
-    utils {
+    utils = {
       source  = "cloudposse/utils"
       version = ">= 0.17.0"
     }
