@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 5.38.0"
+      version = ">= 3.13.0"
     }
     helm = {
       source  = "hashicorp/helm"
@@ -45,15 +45,13 @@ provider "helm" {
   }
 }
 
-module "eks_k_8_s_cluster_autoscaler" {
-  source = "git::git@github.com:gruntwork-io/terraform-aws-eks.git//modules/eks-k8s-cluster-autoscaler?ref=v0.65.6"
+module "cluster_autoscaler" {
+  source = "git::https://github.com/DNXLabs/terraform-aws-eks-cluster-autoscaler.git"
 
-  aws_region = "us-west-2"
+  enabled = true
 
-  eks_cluster_name = "dev"
-
-  iam_role_for_service_accounts_config = object(
-    data.terraform_remote_state.eks.outputs.oidc_provider_arn,
-    data.terraform_remote_state.eks.outputs.cluster_oidc_issuer_url
-  )
+  cluster_name                     = "dev"
+  cluster_identity_oidc_issuer     = data.terraform_remote_state.eks.outputs.cluster_oidc_issuer_url
+  cluster_identity_oidc_issuer_arn = data.terraform_remote_state.eks.outputs.oidc_provider_arn
+  aws_region                       = "us-west-2"
 }
