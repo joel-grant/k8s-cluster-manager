@@ -65,7 +65,7 @@ module "eks" {
       max_size     = 10
       desired_size = 1
 
-      instance_types = ["t3.large"]
+      instance_types = ["t2.nano"]
       capacity_type  = "SPOT"
     }
   }
