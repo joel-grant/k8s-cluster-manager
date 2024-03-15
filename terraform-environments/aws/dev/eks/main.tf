@@ -60,12 +60,12 @@ module "eks" {
   }
 
   eks_managed_node_groups = {
-    example = {
+    dev = {
       min_size     = 1
       max_size     = 10
       desired_size = 1
 
-      instance_types = ["t3.nano"]
+      instance_types = ["t4g.nano"]
       capacity_type  = "SPOT"
     }
   }
