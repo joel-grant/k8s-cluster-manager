@@ -43,8 +43,15 @@ provider "helm" {
   }
 }
 
-data "aws_eks_cluster_auth" "main" {
-  name = "dev"
+data "terraform_remote_state" "eks" {
+  backend = "remote"
+  config = {
+    # Update to your Terraform Cloud organization
+    organization = "chile-man-labs"
+    workspaces = {
+      name = "kubernetes-ops-staging-20-eks"
+    }
+  }
 }
 
 module "eks-ingress-nginx" {
