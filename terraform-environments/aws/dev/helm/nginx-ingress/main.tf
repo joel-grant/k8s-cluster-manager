@@ -46,10 +46,10 @@ provider "helm" {
 data "terraform_remote_state" "eks" {
   backend = "remote"
   config = {
-    # Update to your Terraform Cloud organization
-    organization = "chile-man-labs"
+
+    organization = "rocky-mountain-chile-man"
     workspaces = {
-      name = "kubernetes-ops-staging-20-eks"
+      name = "kubernetes-ops-dev-eks"
     }
   }
 }
