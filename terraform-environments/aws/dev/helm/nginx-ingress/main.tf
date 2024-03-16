@@ -43,6 +43,10 @@ provider "helm" {
   }
 }
 
+data "aws_eks_cluster_auth" "main" {
+  name = local.environment_name
+}
+
 module "eks-ingress-nginx" {
   source  = "lablabs/eks-ingress-nginx/aws"
   version = "1.2.0"
