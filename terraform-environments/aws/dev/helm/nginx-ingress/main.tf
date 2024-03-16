@@ -44,7 +44,7 @@ provider "helm" {
 }
 
 data "aws_eks_cluster_auth" "main" {
-  name = local.environment_name
+  name = "dev""
 }
 
 module "eks-ingress-nginx" {
