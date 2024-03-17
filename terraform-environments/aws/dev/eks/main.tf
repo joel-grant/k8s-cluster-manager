@@ -76,9 +76,19 @@ module "eks" {
 
   access_entries = {
     # One access entry with a policy associated
-    example = {
+    dev-admin = {
       kubernetes_groups = []
       principal_arn     = "arn:aws:iam::211125552941:user/kube-admin"
+
+      policy_associations = {
+        dev-admin = {
+          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+          access_scope = {
+            namespaces = ["default"]
+            type       = "namespace"
+          }
+        }
+      }
     }
   }
 
