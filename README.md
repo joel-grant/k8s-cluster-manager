@@ -12,7 +12,7 @@ Once complete, the work in this repository will:
     - [x] Cluster Autoscaler
     - [ ] Logging aggregation service
     - [x] AWS Certificate management
-    - [x] Ingress
+    - [x] NGINX Ingress
     - [ ] Stats
     - [ ] Ruby/Rails Container Image Setup
 
